@@ -25,14 +25,20 @@
   header{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding-top:8px}
   .logo{width:76px;height:76px;flex:none;border-radius:20px;box-shadow:0 0 0 1px #ffffff1a,0 8px 30px #ff4fa340}
   h1{margin:0;line-height:.85;font-weight:400}
-  h1 .script{display:block;font-family:Anton,sans-serif;font-size:64px;letter-spacing:3px;padding-left:3px;
+  h1 .script{display:block;text-transform:uppercase;font-family:Anton,sans-serif;font-size:64px;letter-spacing:3px;padding-left:3px;
      background:linear-gradient(90deg,var(--pink),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent;
      filter:drop-shadow(0 0 14px #ff4fa366)}
-  h1 .block{display:block;font-family:Anton,sans-serif;font-size:24px;letter-spacing:10px;padding-left:10px;margin-top:4px;color:#fff}
-  .sub{color:var(--muted);margin:10px 0 0;font-size:14px}
+  h1 .block{display:block;text-transform:uppercase;font-family:Anton,sans-serif;font-size:24px;letter-spacing:10px;padding-left:10px;margin-top:4px;color:#fff}
+  .sub{color:var(--muted);margin:10px auto 0;font-size:14px;max-width:600px;line-height:1.5}
   .notice{margin:20px auto 0;max-width:720px;text-align:center;font-size:13px;line-height:1.55;color:var(--ink);
     background:#ffd45c14;border:1px solid #ffd45c55;border-radius:12px;padding:10px 16px}
   .notice strong{color:var(--gold)}
+  .about{margin:44px auto 0;max-width:760px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px 24px;font-size:14px;line-height:1.65;color:var(--ink)}
+  .about h2{margin:0 0 8px;display:block}
+  .about h3{font-family:Anton,sans-serif;font-weight:400;letter-spacing:1px;font-size:17px;color:var(--teal);margin:18px 0 6px}
+  .about p,.about ul{margin:0 0 8px;color:#e4d9f0}
+  .about ul{padding-left:20px}
+  .about a{color:var(--orange)}
   .account{margin:14px auto 0;max-width:720px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
   .account .row{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;text-align:center}
   #acctOut{flex-direction:column;gap:10px}
@@ -157,8 +163,8 @@
            C 320 118, 276 132, 256 168 Z" fill="#ffffff"/>
 </svg>
     <div>
-      <h1><span class="script">LEONIDA</span><span class="block">BIRD LOG</span></h1>
-      <p class="sub">A birdwatching checklist for GTA 6. Tick off each species and count how many you spot.</p>
+      <h1><span class="script">Leonida</span> <span class="block">Bird Log</span></h1>
+      <p class="sub">Leonida Bird Log is a free, fan-made birdwatching checklist for Grand Theft Auto VI. Tick off each bird species you find in Leonida and count how many you spot.</p>
     </div>
   </header>
 
@@ -166,22 +172,7 @@
     <strong>Heads up:</strong> Rockstar hasn't published the full list of 62 birds yet, so this list is fan-made and some birds may be wrong. For now it's based on common Florida birds, and we'll update it as players find out more.
   </aside>
 
-  <section class="account" id="account" hidden aria-live="polite">
-    <div class="row" id="acctOut">
-      <div class="acct-text"><b>Save your progress</b><span>Sign in to keep your checklist on every device.</span></div>
-      <label class="age"><input type="checkbox" id="ageOk"> I'm 13 or older and agree to the <a href="/privacy">privacy policy</a></label>
-      <button class="gbtn" id="signIn" disabled>
-        <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-        Sign in with Google
-      </button>
-    </div>
-    <div class="row" id="acctIn" hidden>
-      <div class="acct-text"><b>Hi, <span id="dName">birder</span> 👋</b><span class="sync ok" id="syncStatus">All sightings saved</span></div>
-      <button class="btn" id="editName">Edit name</button>
-      <button class="btn" id="signOut">Sign out</button>
-      <button class="btn danger" id="delAcct">Delete account</button>
-    </div>
-  </section>
+  <section class="account" id="account" hidden aria-live="polite"></section>
 
   <div class="stats">
     <div class="stat"><b id="sSpecies">0</b><span>Species spotted</span></div>
@@ -210,6 +201,24 @@
     <button class="btn primary" type="submit">Add bird</button>
   </form>
 
+  <section class="about" id="about">
+    <h2>About Leonida Bird Log</h2>
+    <p><strong>Leonida Bird Log</strong> is a free, unofficial birdwatching checklist for players of <em>Grand Theft Auto VI</em>. The game's state of Leonida is home to around 62 bird species, from flamingos and pelicans in the Keys to ospreys over the Grassrivers swamps. Leonida Bird Log helps you keep track of which ones you've found.</p>
+    <h3>What you can do</h3>
+    <ul>
+      <li>Tick off each bird species as you spot it in the game, grouped by habitat: wetlands, coast, skies, woods and city.</li>
+      <li>Count how many times you've seen each bird, and track your progress towards all 62.</li>
+      <li>See which birds are confirmed in the game, marked with a verified badge.</li>
+      <li>Add birds that aren't on the list yet, and remove ones that turn out not to be in the game.</li>
+      <li>Make a share card image of your progress to post on social media.</li>
+    </ul>
+    <h3>Do I need an account?</h3>
+    <p>No. Everyone can use the full checklist without signing in, and your progress is saved in your browser. If you'd like your checklist on more than one device, you can optionally <strong>sign in with Google</strong>. Leonida Bird Log then uses your Google account's name and email address only to create your profile and save your bird sightings to it. We never post anything to your Google account, access any other Google data, or share your information with anyone. You can delete your profile and all its data at any time. Read the full <a href="https://leonidabirdlog.com/privacy">privacy policy</a>.</p>
+    <h3>Who makes it</h3>
+    <p>Leonida Bird Log is made by a fan of the game and is not affiliated with Rockstar Games or Take-Two Interactive. Questions or suggestions: <a href="mailto:reginaelyse@gmail.com">reginaelyse@gmail.com</a>.</p>
+  </section>
+  <noscript><p class="sub">Leonida Bird Log needs JavaScript turned on to show the interactive bird checklist.</p></noscript>
+
   <footer>
     Birds with a <span style="color:var(--teal)">verified badge</span> are confirmed in the game; the rest are common Florida birds that are likely to appear. Add or remove birds to match your in-game wildlife logbook.<br>
     Your progress is saved in this browser only. Use “Share card” to make an image of it for social media.<br>
@@ -232,15 +241,7 @@
 <div class="toast" id="toast"></div>
 <div class="modal" id="modal"><div><p>Reset all your sightings? This clears every tick and count.</p>
   <button class="btn primary" id="yes">Yes, reset</button> <button class="btn" id="no">Cancel</button></div></div>
-<div class="modal" id="nameModal"><div>
-  <p><b>Your display name</b></p>
-  <input type="text" id="nameInput" maxlength="30" autocomplete="nickname" aria-label="Display name">
-  <p class="err" id="nameErr"></p>
-  <button class="btn primary" id="nameSave">Save</button> <button class="btn" id="nameCancel">Cancel</button></div></div>
-<div class="modal" id="delModal"><div>
-  <p><b>Delete your account?</b></p>
-  <p>This permanently deletes your profile and all the sightings saved to it. It can't be undone. The checklist on this device will stay until you clear it.</p>
-  <button class="btn primary" id="delYes">Yes, delete my account</button> <button class="btn" id="delNo">Cancel</button></div></div>
+
 
 <script>
 const HABITATS = ["Wetlands & Swamps","Coast & Beaches","Skies & Raptors","Woods & Countryside","City & Suburbs"];
@@ -562,6 +563,8 @@ async function initAuth(){
   if(!AUTH_HOSTS.includes(location.hostname)) return;   // accounts only work on the real site
   await new Promise((res,rej)=>{ const s=document.createElement("script"); s.src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"; s.onload=res; s.onerror=rej; document.head.appendChild(s); }).catch(()=>null);
   if(!window.supabase||!window.supabase.createClient) return;
+  $("#account").innerHTML="\n    <div class=\"row\" id=\"acctOut\">\n      <div class=\"acct-text\"><b>Save your progress</b><span>Sign in to keep your checklist on every device.</span></div>\n      <label class=\"age\"><input type=\"checkbox\" id=\"ageOk\"> I'm 13 or older and agree to the <a href=\"/privacy\">privacy policy</a></label>\n      <button class=\"gbtn\" id=\"signIn\" disabled>\n        <svg viewBox=\"0 0 48 48\" aria-hidden=\"true\"><path fill=\"#EA4335\" d=\"M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z\"/><path fill=\"#4285F4\" d=\"M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z\"/><path fill=\"#FBBC05\" d=\"M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z\"/><path fill=\"#34A853\" d=\"M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z\"/></svg>\n        Sign in with Google\n      </button>\n    </div>\n    <div class=\"row\" id=\"acctIn\" hidden>\n      <div class=\"acct-text\"><b>Hi, <span id=\"dName\">birder</span> \ud83d\udc4b</b><span class=\"sync ok\" id=\"syncStatus\">All sightings saved</span></div>\n      <button class=\"btn\" id=\"editName\">Edit name</button>\n      <button class=\"btn\" id=\"signOut\">Sign out</button>\n      <button class=\"btn danger\" id=\"delAcct\">Delete account</button>\n    </div>\n  ";
+  document.body.insertAdjacentHTML("beforeend","<div class=\"modal\" id=\"nameModal\"><div>\n  <p><b>Your display name</b></p>\n  <input type=\"text\" id=\"nameInput\" maxlength=\"30\" autocomplete=\"nickname\" aria-label=\"Display name\">\n  <p class=\"err\" id=\"nameErr\"></p>\n  <button class=\"btn primary\" id=\"nameSave\">Save</button> <button class=\"btn\" id=\"nameCancel\">Cancel</button></div></div>\n<div class=\"modal\" id=\"delModal\"><div>\n  <p><b>Delete your account?</b></p>\n  <p>This permanently deletes your profile and all the sightings saved to it. It can't be undone. The checklist on this device will stay until you clear it.</p>\n  <button class=\"btn primary\" id=\"delYes\">Yes, delete my account</button> <button class=\"btn\" id=\"delNo\">Cancel</button></div></div>");
   sb=window.supabase.createClient(SB_URL,SB_KEY,{auth:{flowType:"pkce",persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
   showAccount(false);
   $("#ageOk").addEventListener("change",e=>{ $("#signIn").disabled=!e.target.checked; });

@@ -22,6 +22,8 @@
     background:linear-gradient(90deg,var(--pink),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}
   h1{font-family:Anton,sans-serif;font-weight:400;letter-spacing:2px;font-size:30px;margin:6px 0 0}
   .updated{color:var(--muted);font-size:13px;margin:0}
+  h3{font-size:16px;margin:20px 0 4px;color:var(--gold)}
+  code{background:#ffffff14;border-radius:5px;padding:1px 5px;font-size:13px}
   h2{font-family:Anton,sans-serif;font-weight:400;letter-spacing:1.5px;font-size:20px;margin:34px 0 8px;color:var(--teal)}
   p,li{font-size:15px}
   ul{padding-left:20px}
@@ -41,28 +43,50 @@
     <a href="/"><img src="logo-120.png" alt="Leonida Bird Log logo"></a>
     <a href="/" class="brand">LEONIDA BIRD LOG</a>
     <h1>PRIVACY POLICY</h1>
-    <p class="updated">Last updated: 19 November 2026</p>
+    <p class="updated">Last updated: 19 November 2026 · <a href="/">leonidabirdlog.com</a></p>
   </header>
 
   <div class="card">
-    <strong>The short version:</strong> when you create a profile by signing in with Google, we store your email address, a display name and your bird sightings so your progress is saved to your account and follows you between devices. We never sell your data, show ads or use tracking cookies, and you can delete your account at any time.
+    <strong>The short version:</strong> Leonida Bird Log is a free birdwatching checklist for Grand Theft Auto VI. When you create a profile by signing in with Google, we store your email address, a display name and your bird sightings so your progress is saved to your account and follows you between devices. We never sell your data, show ads or use tracking cookies, and you can delete your account at any time.
   </div>
 
   <h2>Who we are</h2>
   <p>Leonida Bird Log (<a href="https://leonidabirdlog.com">leonidabirdlog.com</a>) is a free, unofficial fan-made birdwatching checklist for the game Grand Theft Auto VI. It is run by an individual in the United Kingdom, who is the data controller for the personal data described here. It is not affiliated with Rockstar Games or Take-Two Interactive.</p>
   <p>Contact: <a href="mailto:reginaelyse@gmail.com">reginaelyse@gmail.com</a></p>
 
-  <h2>What we collect when you create a profile</h2>
-  <p>Profiles are created by signing in with your Google account. When you do, we receive and store:</p>
-  <table>
-    <tr><th>Data</th><th>Why we need it</th></tr>
-    <tr><td>Your Google account ID and email address</td><td>To recognise your account each time you sign in, and to contact you about your account if we ever need to.</td></tr>
-    <tr><td>A display name</td><td>To label your profile. You can change it at any time.</td></tr>
-    <tr><td>Your bird sightings (species, counts and when you logged them)</td><td>To save your checklist and sync it across your devices.</td></tr>
-  </table>
-  <p>We only ask Google for your basic profile and email address. We can't see your Google password, contacts, emails, files or anything else in your Google account.</p>
-  <p>The first time you sign in, any progress already saved in your browser is copied into your profile so you don't lose it.</p>
-  <p>Our use of information received from Google follows the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including its Limited Use requirements. We use it only to provide the sign-in and checklist features described here. We do not use it for advertising, and we do not sell or transfer it to anyone else.</p>
+  <h2>How Leonida Bird Log uses Google user data</h2>
+  <p>Leonida Bird Log offers optional "Sign in with Google" so players can save their birdwatching checklist to a profile and use it on more than one device. This section explains exactly what Google user data we access and what we do with it.</p>
+
+  <h3>Data accessed</h3>
+  <p>When you sign in with Google, Leonida Bird Log requests only the basic sign-in scopes <code>openid</code>, <code>email</code> and <code>profile</code>. From these we receive:</p>
+  <ul>
+    <li>your Google account's unique ID</li>
+    <li>your email address</li>
+    <li>your name and a link to your profile picture</li>
+  </ul>
+  <p>These details are kept with your login record so you can sign in. Leonida Bird Log itself only uses your first name, as the starting display name on your profile, and never displays your full name or profile picture. We do not request or access your Gmail, contacts, calendar, Drive files, YouTube or any other Google service.</p>
+
+  <h3>Data usage</h3>
+  <p>We use your Google user data only to:</p>
+  <ul>
+    <li>create your Leonida Bird Log profile and sign you in to it</li>
+    <li>show your display name on the site, which you can change at any time</li>
+    <li>save your bird sightings to your profile and sync them across your devices</li>
+    <li>contact you about your account, for example if you ask us to delete your data</li>
+  </ul>
+  <p>We do not use Google user data for advertising, marketing, profiling, selling, or training artificial intelligence or machine-learning models.</p>
+
+  <h3>Data sharing</h3>
+  <p>We do not sell, rent or share your Google user data with anyone. It is processed only by the service providers that run Leonida Bird Log on our behalf: Supabase, which hosts the database and handles sign-in, and Google, which provides Sign in with Google. They may only use it to provide that service. We would only disclose it if the law required us to.</p>
+
+  <h3>Data storage and protection</h3>
+  <p>Profiles and sightings are stored in a Supabase database in the United States (East US). Data is encrypted in transit (HTTPS) and at rest. Database security rules ensure each signed-in player can only read and change their own profile and sightings, and no one else can see them. Only the site owner can access the database's administration tools, and those are protected by two-step sign-in.</p>
+
+  <h3>Data retention and deletion</h3>
+  <p>We keep your Google user data and sightings for as long as you have a profile. You can delete your profile at any time with the <strong>Delete account</strong> button on the site. This immediately and permanently deletes your login record (including your Google account ID, email address, name and profile picture link), your profile and all your sightings. You can also email <a href="mailto:reginaelyse@gmail.com">reginaelyse@gmail.com</a> to ask for deletion, and we will do it within 30 days. You can remove Leonida Bird Log's access at any time in your Google Account under <em>Security → Third-party apps and services</em>.</p>
+
+  <h3>Google API Services User Data Policy</h3>
+  <p>Leonida Bird Log's use and transfer of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
 
   <h2>Using the site without a profile</h2>
   <p>You can still use the checklist without signing in. Your ticks and counts are then saved only in your browser on your own device and are never sent to us. Share card images are always created on your device and only leave it if you choose to save or post them.</p>

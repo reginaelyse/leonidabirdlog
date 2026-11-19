@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Leonida Bird Log: a free birdwatching checklist for GTA 6. Tick off all 62 bird species, count your sightings and share your progress card.">
+<meta property="og:title" content="Leonida Bird Log — GTA 6 Birdwatching Checklist">
+<meta property="og:description" content="Tick off all 62 GTA 6 bird species, count your sightings and share your progress card.">
+<meta name="theme-color" content="#140d1f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23ff4fa3'/%3E%3Cpath d='M14 30c6-6 12-6 18 0 6-6 12-6 18 0-6-2-12 0-18 6-6-6-12-8-18-6z' fill='%23140d1f'/%3E%3C/svg%3E">
+<title>Leonida Bird Log — GTA 6 Birdwatching Checklist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#140d1f; --panel:#1f1530; --panel2:#291c3f; --line:#3a2b55;
+    --ink:#f6eefc; --muted:#b5a6c9; --pink:#ff4fa3; --orange:#ff9a3c; --teal:#2fd3c5; --gold:#ffd45c;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:
+    radial-gradient(1200px 500px at 80% -10%, #ff4fa333, transparent 60%),
+    radial-gradient(900px 500px at -10% 10%, #2fd3c522, transparent 60%), var(--bg);min-height:100vh}
+  .wrap{max-width:980px;margin:0 auto;padding:28px 18px 60px}
+  header{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding-top:8px}
+  .logo{width:64px;height:64px;flex:none}
+  h1{margin:0;line-height:.85;font-weight:400}
+  h1 .script{display:block;font-family:Anton,sans-serif;font-size:64px;letter-spacing:3px;padding-left:3px;
+     background:linear-gradient(90deg,var(--pink),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent;
+     filter:drop-shadow(0 0 14px #ff4fa366)}
+  h1 .block{display:block;font-family:Anton,sans-serif;font-size:24px;letter-spacing:10px;padding-left:10px;margin-top:4px;color:#fff}
+  .sub{color:var(--muted);margin:10px 0 0;font-size:14px}
+  .notice{margin:20px auto 0;max-width:720px;text-align:center;font-size:13px;line-height:1.55;color:var(--ink);
+    background:#ffd45c14;border:1px solid #ffd45c55;border-radius:12px;padding:10px 16px}
+  .notice strong{color:var(--gold)}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0 10px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;text-align:center}
+  .stat b{display:block;font-family:Anton,sans-serif;font-size:34px;font-weight:400;line-height:1}
+  .stat span{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+  .bar{height:12px;background:var(--panel2);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+  .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--pink),var(--orange));transition:width .4s}
+  .rank{text-align:center;margin:10px 0 22px;color:var(--gold);font-weight:600;font-size:14px}
+  .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+  input[type=search],input[type=text],select{background:var(--panel);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:10px 12px;font:inherit;font-size:14px}
+  input[type=search]{flex:1;min-width:180px}
+  .seg{display:flex;background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .seg button{background:none;border:0;color:var(--muted);padding:10px 14px;font:inherit;font-size:13px;cursor:pointer}
+  .seg button.on{background:var(--pink);color:#fff}
+  .btn{background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:10px 14px;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+  .btn:hover{border-color:var(--pink)}
+  .btn.primary{background:linear-gradient(90deg,var(--pink),var(--orange));border:0;color:#fff}
+  h2{font-family:Anton,sans-serif;font-weight:400;font-size:22px;letter-spacing:2px;margin:26px 0 10px;display:flex;justify-content:space-between;align-items:baseline}
+  h2 small{font-family:Inter;font-size:12px;color:var(--muted);letter-spacing:0}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+  .bird{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 12px;transition:.15s}
+  .bird.seen{border-color:var(--teal);background:linear-gradient(90deg,#2fd3c51a,var(--panel) 60%)}
+  .check{width:26px;height:26px;border-radius:8px;border:2px solid var(--line);background:none;cursor:pointer;flex:none;display:grid;place-items:center;color:transparent;font-size:16px;font-weight:700}
+  .bird.seen .check{background:var(--teal);border-color:var(--teal);color:#0d1f22}
+  .name{flex:1;min-width:0}
+  .name div{font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tag{white-space:nowrap;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+  .tag.conf{color:var(--gold)}
+  .step{display:flex;align-items:center;gap:4px}
+  .step button{width:26px;height:26px;border-radius:7px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);cursor:pointer;font-size:15px;line-height:1}
+  .step output{min-width:28px;text-align:center;font-variant-numeric:tabular-nums;font-weight:700}
+  .del{background:none;border:0;color:var(--muted);cursor:pointer;font-size:14px;padding:2px 4px}
+  .del:hover{color:var(--pink)}
+  .add{display:flex;gap:8px;flex-wrap:wrap;margin-top:28px;background:var(--panel);border:1px dashed var(--line);border-radius:14px;padding:14px}
+  .add input{flex:1;min-width:180px}
+  .empty{color:var(--muted);font-size:14px;padding:6px 2px}
+  footer{margin-top:36px;color:var(--muted);font-size:12px;line-height:1.6}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(80px);background:var(--teal);color:#0d1f22;font-weight:700;padding:10px 16px;border-radius:10px;transition:.3s;opacity:0}
+  .toast.show{transform:translateX(-50%);opacity:1}
+  .modal{position:fixed;inset:0;background:#000a;display:none;place-items:center;padding:20px}
+  .modal.show{display:grid}
+  .modal div{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;max-width:360px}
+  .modal p{margin:0 0 16px}
+  .sharebox{position:fixed;inset:0;background:#000c;display:none;place-items:center;padding:16px;overflow:auto;z-index:5}
+  .sharebox.show{display:grid}
+  .sharebox .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;max-width:440px;width:100%}
+  .sharebox img{width:100%;border-radius:10px;display:block;background:#000;aspect-ratio:4/5}
+  .sharebox .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .sharebox .row .btn{flex:1}
+  .sharebox .hint{color:var(--muted);font-size:12px;margin:10px 0 0;line-height:1.5}
+  @media (max-width:560px){h1 .script{font-size:50px}h1 .block{font-size:20px}.stat b{font-size:30px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
+      <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff4fa3"/><stop offset="1" stop-color="#ff9a3c"/></linearGradient></defs>
+      <circle cx="32" cy="32" r="30" fill="#1f1530" stroke="url(#g)" stroke-width="3"/>
+      <circle cx="32" cy="40" r="12" fill="#ff9a3c" opacity=".35"/>
+      <path d="M14 30c6-6 12-6 18 0 6-6 12-6 18 0-6-2-12 0-18 6-6-6-12-8-18-6z" fill="url(#g)"/>
+    </svg>
+    <div>
+      <h1><span class="script">LEONIDA</span><span class="block">BIRD LOG</span></h1>
+      <p class="sub">A birdwatching checklist for GTA 6. Tick off each species and count how many you spot.</p>
+    </div>
+  </header>
+
+  <aside class="notice" role="note">
+    <strong>Heads up:</strong> Rockstar hasn't published the full list of 62 birds yet, so this list is fan-made and some birds may be wrong. For now it's based on common Florida birds, and we'll update it as players find out more.
+  </aside>
+
+  <div class="stats">
+    <div class="stat"><b id="sSpecies">0</b><span>Species spotted</span></div>
+    <div class="stat"><b id="sGoal">62</b><span>Species in the game</span></div>
+    <div class="stat"><b id="sTotal">0</b><span>Total sightings</span></div>
+  </div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="rank" id="rank"></div>
+
+  <div class="controls">
+    <input type="search" id="q" placeholder="Search birds…" aria-label="Search birds">
+    <div class="seg" id="filter">
+      <button data-f="all" class="on">All</button>
+      <button data-f="seen">Spotted</button>
+      <button data-f="missing">Still to find</button>
+    </div>
+    <button class="btn primary" id="share">📸 Share card</button>
+    <button class="btn" id="reset">Reset</button>
+  </div>
+
+  <div id="list"></div>
+
+  <form class="add" id="addForm">
+    <input type="text" id="newName" placeholder="Found a bird that isn't listed? Add it here" required>
+    <select id="newHab" aria-label="Habitat"></select>
+    <button class="btn primary" type="submit">Add bird</button>
+  </form>
+
+  <footer>
+    Birds marked <span style="color:var(--gold)">★ Seen in trailers</span> have been shown in official footage; the rest are common Florida birds that are likely to appear. Add or remove birds to match your in-game wildlife logbook.<br>
+    Your progress is saved in this browser only. Use “Share card” to make an image of it for social media.<br>
+    Unofficial fan-made tracker, not affiliated with Rockstar Games.
+  </footer>
+</div>
+
+<div class="sharebox" id="sharebox"><div class="card">
+  <img id="cardImg" alt="Your Leonida Bird Log share card">
+  <div class="row">
+    <button class="btn primary" id="saveImg" hidden>⬇ Save image</button>
+    <button class="btn" id="copyImg">Copy image</button>
+    <button class="btn" id="copy">Copy as text</button>
+  </div>
+  <p class="hint" id="saveHint">On a phone, press and hold the image to save it. On a computer, right-click it and choose “Save image”.</p>
+  <div class="row"><button class="btn" id="closeShare">Close</button></div>
+</div></div>
+<canvas id="cv" width="1080" height="1350" hidden></canvas>
+
+<div class="toast" id="toast"></div>
+<div class="modal" id="modal"><div><p>Reset all your sightings? This clears every tick and count.</p>
+  <button class="btn primary" id="yes">Yes, reset</button> <button class="btn" id="no">Cancel</button></div></div>
+
+<script>
+const HABITATS = ["Wetlands & Swamps","Coast & Beaches","Skies & Raptors","Woods & Countryside","City & Suburbs"];
+const CONFIRMED = new Set(["American Flamingo","Brown Pelican","Mallard","Sandhill Crane","Great Egret"]);
+const SEED = {
+  "Wetlands & Swamps":["Great Egret","Snowy Egret","Great Blue Heron","Tricolored Heron","Little Blue Heron","Green Heron","Black-crowned Night Heron","Roseate Spoonbill","White Ibis","Wood Stork","Sandhill Crane","Limpkin","Anhinga","Purple Gallinule","Common Gallinule","Mottled Duck","Wood Duck","Mallard","Belted Kingfisher"],
+  "Coast & Beaches":["American Flamingo","Brown Pelican","American White Pelican","Double-crested Cormorant","Laughing Gull","Royal Tern","Black Skimmer","Magnificent Frigatebird","Sanderling","Ruddy Turnstone"],
+  "Skies & Raptors":["Osprey","Bald Eagle","Red-shouldered Hawk","Swallow-tailed Kite","Snail Kite","Crested Caracara","Turkey Vulture","Black Vulture","Great Horned Owl","Barred Owl","Burrowing Owl"],
+  "Woods & Countryside":["Wild Turkey","Pileated Woodpecker","Red-bellied Woodpecker","Painted Bunting","Northern Cardinal","Blue Jay","Ruby-throated Hummingbird","Chicken"],
+  "City & Suburbs":["Rock Pigeon","Mourning Dove","Muscovy Duck","Monk Parakeet","Fish Crow","Boat-tailed Grackle","Northern Mockingbird","House Sparrow","European Starling"]
+};
+const KEY = "leonida-bird-log-v1";
+let state, filter = "all", query = "";
+
+function fresh(){
+  const birds=[];
+  for(const h of HABITATS) for(const n of SEED[h]) birds.push({id:n,name:n,hab:h,count:0,seen:false});
+  return {birds};
+}
+function load(){ try{ const s=JSON.parse(localStorage.getItem(KEY)); if(s&&Array.isArray(s.birds)) return s; }catch(e){} return fresh(); }
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} }
+state = load();
+
+const $ = s=>document.querySelector(s);
+const esc = s=>s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function rankFor(n){
+  if(n>=62) return "🏆 Master Birder of Leonida — every species found!";
+  if(n>=45) return "🦩 Flamingo Fanatic";
+  if(n>=30) return "🔭 Swamp Scout";
+  if(n>=15) return "🪶 Keen Spotter";
+  if(n>=1)  return "🐣 Fledgling Birder";
+  return "Go find your first bird!";
+}
+
+function render(){
+  const seenN = state.birds.filter(b=>b.seen).length;
+  const total = state.birds.reduce((a,b)=>a+b.count,0);
+  $("#sSpecies").textContent=seenN; $("#sTotal").textContent=total;
+  $("#bar").style.width=Math.min(100,seenN/62*100)+"%";
+  $("#rank").textContent=rankFor(seenN);
+
+  let html="";
+  for(const h of HABITATS){
+    const all=state.birds.filter(b=>b.hab===h);
+    const shown=all.filter(b=>(filter==="all"||(filter==="seen"?b.seen:!b.seen)) && b.name.toLowerCase().includes(query));
+    if(!shown.length && (query||filter!=="all")) continue;
+    html+=`<h2>${h}<small>${all.filter(b=>b.seen).length} / ${all.length}</small></h2><div class="grid">`;
+    if(!shown.length) html+=`<div class="empty">No birds here yet.</div>`;
+    for(const b of shown){
+      const conf=CONFIRMED.has(b.name);
+      html+=`<div class="bird ${b.seen?"seen":""}" data-id="${esc(b.id)}">
+        <button class="check" data-act="toggle" aria-label="Mark ${esc(b.name)} as spotted">✓</button>
+        <div class="name"><div>${esc(b.name)}</div><span class="tag ${conf?"conf":""}">${conf?"★ Seen in trailers":(b.custom?"Added by you":"Likely")}</span></div>
+        <div class="step"><button data-act="dec" aria-label="One fewer">−</button><output>${b.count}</output><button data-act="inc" aria-label="One more">+</button></div>
+        <button class="del" data-act="del" title="Remove from list" aria-label="Remove ${esc(b.name)}">✕</button>
+      </div>`;
+    }
+    html+="</div>";
+  }
+  $("#list").innerHTML = html || `<p class="empty">No birds match that search.</p>`;
+}
+
+$("#list").addEventListener("click",e=>{
+  const btn=e.target.closest("[data-act]"); if(!btn) return;
+  const b=state.birds.find(x=>x.id===btn.closest(".bird").dataset.id); if(!b) return;
+  const act=btn.dataset.act;
+  if(act==="toggle"){ b.seen=!b.seen; if(b.seen&&b.count===0) b.count=1; if(!b.seen) b.count=0; }
+  if(act==="inc"){ b.count++; b.seen=true; }
+  if(act==="dec"){ b.count=Math.max(0,b.count-1); if(b.count===0) b.seen=false; }
+  if(act==="del"){ state.birds=state.birds.filter(x=>x!==b); toast(`Removed ${b.name}`); }
+  save(); render();
+});
+
+$("#q").addEventListener("input",e=>{query=e.target.value.trim().toLowerCase();render();});
+$("#filter").addEventListener("click",e=>{
+  const f=e.target.dataset.f; if(!f) return; filter=f;
+  document.querySelectorAll("#filter button").forEach(b=>b.classList.toggle("on",b.dataset.f===f)); render();
+});
+
+$("#newHab").innerHTML=HABITATS.map(h=>`<option>${h}</option>`).join("");
+$("#addForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const name=$("#newName").value.trim(); if(!name) return;
+  if(state.birds.some(b=>b.name.toLowerCase()===name.toLowerCase())){ toast("That bird is already on the list"); return; }
+  state.birds.push({id:name+"-"+Date.now(),name,hab:$("#newHab").value,count:0,seen:false,custom:true});
+  $("#newName").value=""; save(); render(); toast(`Added ${name}`);
+});
+
+/* ---------- Share card (1080×1350, Instagram portrait) ---------- */
+let cardBlob=null, downloads=null;
+const standalone=!window.claude; // true when hosted on your own website
+if(standalone){ $("#saveImg").hidden=false; $("#saveHint").textContent="On a phone you can also press and hold the image to save it."; }
+try{ window.claude && claude.use("downloads").then(d=>{ downloads=d; $("#saveImg").hidden=!d; if(d) $("#saveHint").textContent="Or press and hold / right-click the image to save it."; }).catch(()=>{}); }catch(e){}
+
+function roundRect(c,x,y,w,h,r){ c.beginPath(); c.moveTo(x+r,y); c.arcTo(x+w,y,x+w,y+h,r); c.arcTo(x+w,y+h,x,y+h,r); c.arcTo(x,y+h,x,y,r); c.arcTo(x,y,x+w,y,r); c.closePath(); }
+function fitText(c,t,max){ if(c.measureText(t).width<=max) return t; while(t.length>1&&c.measureText(t+"…").width>max) t=t.slice(0,-1); return t+"…"; }
+function birdGlyph(c,x,y,s){ c.beginPath(); c.moveTo(x-s,y); c.quadraticCurveTo(x-s/2,y-s*.6,x,y); c.quadraticCurveTo(x+s/2,y-s*.6,x+s,y); c.quadraticCurveTo(x+s/2,y-s*.25,x,y+s*.15); c.quadraticCurveTo(x-s/2,y-s*.25,x-s,y); c.fill(); }
+// centred text that corrects for canvas letterSpacing adding a trailing gap
+function ctext(c,t,y,font,fill,sp=0,cx=540){ c.font=font; c.letterSpacing=sp+"px"; const w=c.measureText(t).width-sp; c.textAlign="left"; c.fillStyle=fill; c.fillText(t,cx-w/2,y); c.letterSpacing="0px"; return w; }
+
+async function drawCard(){
+  try{ await Promise.all([document.fonts.load('120px Anton'),document.fonts.load('600 30px Inter'),document.fonts.load('400 30px Inter')]); }catch(e){}
+  const cv=$("#cv"), c=cv.getContext("2d"), W=1080, H=1350, CX=W/2, HZ=770;
+  const seen=state.birds.filter(b=>b.seen), n=seen.length, total=state.birds.reduce((a,b)=>a+b.count,0);
+  c.clearRect(0,0,W,H);
+  // sky
+  const skyG=c.createLinearGradient(0,0,0,HZ); skyG.addColorStop(0,"#120a24"); skyG.addColorStop(.45,"#3d1052"); skyG.addColorStop(.8,"#b02a74"); skyG.addColorStop(1,"#ff7a45");
+  let g=skyG; c.fillStyle=g; c.fillRect(0,0,W,HZ);
+  // ground / water
+  g=c.createLinearGradient(0,HZ,0,H); g.addColorStop(0,"#1c0f2e"); g.addColorStop(1,"#0e0818"); c.fillStyle=g; c.fillRect(0,HZ,W,H-HZ);
+  // sun with symmetric stripes, glow
+  c.save(); c.beginPath(); c.rect(0,0,W,HZ); c.clip();
+  c.shadowColor="#ff4fa3"; c.shadowBlur=90;
+  const sg=c.createLinearGradient(0,HZ-270,0,HZ); sg.addColorStop(0,"#ffd45c"); sg.addColorStop(.55,"#ff8a4c"); sg.addColorStop(1,"#ff4fa3");
+  c.fillStyle=sg; c.beginPath(); c.arc(CX,HZ,270,Math.PI,0); c.fill(); c.shadowBlur=0;
+  c.beginPath(); c.arc(CX,HZ,272,Math.PI,0); c.clip(); c.fillStyle=skyG;
+  for(let i=0;i<5;i++){ const h=Math.round(4+i*3), bottom=HZ-(4-i)*24; c.fillRect(0,bottom-h,W,h); }
+  c.restore();
+  // horizon line
+  c.fillStyle="#ff9a3c"; c.fillRect(0,HZ-2,W,3);
+  // mirrored birds
+  c.fillStyle="#0e0818cc"; [[300,430,30],[220,470,18],[360,480,14]].forEach(([x,y,s])=>{ birdGlyph(c,x,y,s); birdGlyph(c,W-x,y,s); });
+  // header
+  ctext(c,"GTA 6  ·  BIRDWATCHING",100,"400 30px Anton","#2fd3c5",10);
+  c.save(); c.shadowColor="#ff4fa3aa"; c.shadowBlur=30;
+  c.font="400 168px Anton"; c.letterSpacing="6px"; const tw=c.measureText("LEONIDA").width-6;
+  const tg=c.createLinearGradient(CX-tw/2,0,CX+tw/2,0); tg.addColorStop(0,"#ff4fa3"); tg.addColorStop(1,"#ff9a3c");
+  ctext(c,"LEONIDA",268,"400 168px Anton",tg,6); c.restore();
+  ctext(c,"BIRD LOG",338,"400 52px Anton","#ffffff",22);
+  // big number, sitting on the sun
+  c.save(); c.shadowColor="#120a2488"; c.shadowBlur=24; c.shadowOffsetY=6;
+  ctext(c,String(n),700,"400 280px Anton","#ffffff",0); c.restore();
+  // stats below horizon
+  ctext(c,"OF 62 SPECIES SPOTTED",840,"400 40px Anton","#f6eefc",8);
+  const bw=640, bx=CX-bw/2, by=872;
+  roundRect(c,bx,by,bw,16,8); c.fillStyle="#ffffff1f"; c.fill();
+  const fill=Math.max(16,bw*Math.min(1,n/62)); const bg=c.createLinearGradient(bx,0,bx+bw,0); bg.addColorStop(0,"#2fd3c5"); bg.addColorStop(.6,"#ff4fa3"); bg.addColorStop(1,"#ff9a3c");
+  roundRect(c,bx,by,fill,16,8); c.fillStyle=bg; c.fill();
+  const rank=rankFor(n).replace(/^[^A-Za-z]+/,"").split(" — ")[0];
+  ctext(c,rank.toUpperCase(),958,"400 46px Anton","#ffd45c",4);
+  ctext(c,`${total} TOTAL SIGHTING${total===1?"":"S"}`,1000,"600 24px Inter","#b5a6c9",4);
+  // most spotted chips, centred rows
+  const top=[...seen].sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name));
+  if(top.length){
+    const lw=ctext(c,"MOST SPOTTED",1066,"400 26px Anton","#2fd3c5",6);
+    c.fillStyle="#2fd3c566"; c.fillRect(CX-lw/2-110,1056,90,2); c.fillRect(CX+lw/2+20,1056,90,2);
+    c.font="600 27px Inter"; const pad=22, gap=12, maxW=960, rowsMax=2, ch=52;
+    const chips=top.map(b=>{ const name=b.name, num="×"+b.count; c.font="600 27px Inter"; const nw=c.measureText(name).width; c.font="700 27px Inter"; const cw=c.measureText(num).width; return {name,num,nw,cw,w:pad*2+nw+10+cw}; });
+    const rows=[[]]; let rw=0;
+    for(const ch_ of chips){ if(rows[rows.length-1].length&&rw+gap+ch_.w>maxW){ if(rows.length===rowsMax) break; rows.push([]); rw=0; } const r=rows[rows.length-1]; rw+=(r.length?gap:0)+ch_.w; r.push(ch_); }
+    rows.forEach((r,i)=>{
+      const total=r.reduce((a,x)=>a+x.w,0)+gap*(r.length-1); let x=CX-total/2; const y=1096+i*(ch+14);
+      for(const k of r){
+        roundRect(c,x,y,k.w,ch,ch/2); c.fillStyle="#ffffff10"; c.fill(); c.strokeStyle="#ffffff26"; c.lineWidth=2; c.stroke();
+        c.textAlign="left"; c.font="600 27px Inter"; c.fillStyle="#f6eefc"; c.fillText(k.name,x+pad,y+35);
+        c.font="700 27px Inter"; c.fillStyle="#ff9a3c"; c.fillText(k.num,x+pad+k.nw+10,y+35);
+        x+=k.w+gap;
+      }
+    });
+  } else {
+    ctext(c,"THE HUNT BEGINS",1120,"400 40px Anton","#f6eefc",8);
+  }
+  ctext(c,"UNOFFICIAL FAN-MADE TRACKER  ·  NOT AFFILIATED WITH ROCKSTAR GAMES",1300,"500 18px Inter","#b5a6c977",3);
+  $("#cardImg").src=cv.toDataURL("image/png");
+  cardBlob=await new Promise(r=>cv.toBlob(r,"image/png"));
+}
+
+$("#share").addEventListener("click",async()=>{ $("#sharebox").classList.add("show"); await drawCard(); });
+$("#closeShare").addEventListener("click",()=>$("#sharebox").classList.remove("show"));
+$("#sharebox").addEventListener("click",e=>{ if(e.target.id==="sharebox") $("#sharebox").classList.remove("show"); });
+$("#saveImg").addEventListener("click",async()=>{
+  if(!cardBlob) return;
+  if(standalone){ const a=document.createElement("a"); a.href=URL.createObjectURL(cardBlob); a.download="leonida-bird-log.png"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),4000); toast("Image saved!"); return; }
+  if(!downloads) return;
+  try{ await downloads.save({filename:"leonida-bird-log.png",data:cardBlob}); toast("Image saved!"); }
+  catch(e){ if(e&&e.code==="declined") return; if(e&&e.code==="rate_limited"){ toast("One moment, then try again"); return; } $("#saveImg").hidden=true; toast("Saving isn't available here — hold or right-click the image"); }
+});
+$("#copyImg").addEventListener("click",async()=>{
+  try{ await navigator.clipboard.write([new ClipboardItem({"image/png":cardBlob})]); toast("Image copied — paste it into your post"); }
+  catch(e){ toast("Couldn't copy the image here — save it instead"); }
+});
+
+$("#copy").addEventListener("click",async()=>{
+  const seen=state.birds.filter(b=>b.seen);
+  const text=`🦩 My GTA 6 Leonida Bird Log: ${seen.length}/62 species, ${state.birds.reduce((a,b)=>a+b.count,0)} sightings — ${rankFor(seen.length)}\n`+
+    seen.map(b=>`✓ ${b.name} ×${b.count}`).join("\n");
+  try{ await navigator.clipboard.writeText(text); toast("Progress copied!"); }catch(e){ toast("Couldn't copy here — try another browser"); }
+});
+
+$("#reset").addEventListener("click",()=>$("#modal").classList.add("show"));
+$("#no").addEventListener("click",()=>$("#modal").classList.remove("show"));
+$("#yes").addEventListener("click",()=>{ state.birds.forEach(b=>{b.count=0;b.seen=false;}); save(); render(); $("#modal").classList.remove("show"); toast("All sightings cleared"); });
+
+let tt; function toast(m){ const t=$("#toast"); t.textContent=m; t.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove("show"),1800); }
+
+render();
+</script>
+</body>
+</html>

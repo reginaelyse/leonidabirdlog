@@ -249,14 +249,14 @@
 
 <script>
 const HABITATS = ["Wetlands & Swamps","Coast & Beaches","Skies & Raptors","Woods & Countryside","City & Suburbs"];
-const CONFIRMED = new Set(["American Flamingo","Brown Pelican","Mallard","Sandhill Crane","Great Egret","Osprey","Caspian Tern","Laughing Gull","Monk Parakeet","Double-crested Cormorant"]); // bird ids
+const CONFIRMED = new Set(["American Flamingo","Brown Pelican","Mallard","Sandhill Crane","Great Egret","Osprey","Caspian Tern","Laughing Gull","Monk Parakeet","Double-crested Cormorant","American Crow","Herring Gull"]); // bird ids
 const DISPLAY = {"Osprey":"Western Osprey","Brown Pelican":"Eastern Brown Pelican"}; // id -> name shown (ids never change, so saved sightings carry over)
 const SEED = {
   "Wetlands & Swamps":["Great Egret","Snowy Egret","Great Blue Heron","Tricolored Heron","Little Blue Heron","Green Heron","Black-crowned Night Heron","Roseate Spoonbill","White Ibis","Wood Stork","Sandhill Crane","Limpkin","Anhinga","Purple Gallinule","Common Gallinule","Mottled Duck","Wood Duck","Mallard","Belted Kingfisher"],
-  "Coast & Beaches":["American Flamingo","Brown Pelican","American White Pelican","Double-crested Cormorant","Laughing Gull","Royal Tern","Caspian Tern","Black Skimmer","Magnificent Frigatebird","Sanderling","Ruddy Turnstone"],
+  "Coast & Beaches":["American Flamingo","Brown Pelican","American White Pelican","Double-crested Cormorant","Laughing Gull","Herring Gull","Royal Tern","Caspian Tern","Black Skimmer","Magnificent Frigatebird","Sanderling","Ruddy Turnstone"],
   "Skies & Raptors":["Osprey","Bald Eagle","Red-shouldered Hawk","Swallow-tailed Kite","Snail Kite","Crested Caracara","Turkey Vulture","Black Vulture","Great Horned Owl","Barred Owl","Burrowing Owl"],
   "Woods & Countryside":["Wild Turkey","Pileated Woodpecker","Red-bellied Woodpecker","Painted Bunting","Northern Cardinal","Blue Jay","Ruby-throated Hummingbird","Chicken"],
-  "City & Suburbs":["Rock Pigeon","Mourning Dove","Muscovy Duck","Monk Parakeet","Fish Crow","Boat-tailed Grackle","Northern Mockingbird","House Sparrow","European Starling"]
+  "City & Suburbs":["Rock Pigeon","Mourning Dove","Muscovy Duck","Monk Parakeet","American Crow","Fish Crow","Boat-tailed Grackle","Northern Mockingbird","House Sparrow","European Starling"]
 };
 const KEY = "leonida-bird-log-v1";
 const SEED_HABS = {}; for(const h of HABITATS) for(const n of SEED[h]) SEED_HABS[n]=h;

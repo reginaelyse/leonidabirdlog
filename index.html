@@ -33,6 +33,23 @@
   .notice{margin:20px auto 0;max-width:720px;text-align:center;font-size:13px;line-height:1.55;color:var(--ink);
     background:#ffd45c14;border:1px solid #ffd45c55;border-radius:12px;padding:10px 16px}
   .notice strong{color:var(--gold)}
+  .account{margin:14px auto 0;max-width:720px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .account .row{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;text-align:center}
+  #acctOut{flex-direction:column;gap:10px}
+  .account [hidden],.account[hidden]{display:none!important}
+  .acct-text{display:flex;flex-direction:column;align-items:center;font-size:13px;color:var(--muted);line-height:1.4}
+  .acct-text b{color:var(--ink);font-size:15px}
+  .age{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);cursor:pointer}
+  .age input{width:16px;height:16px;accent-color:var(--pink)}
+  .age a{color:var(--orange)}
+  .gbtn{display:inline-flex;align-items:center;gap:10px;background:#fff;color:#1f1f1f;border:1px solid #dadce0;border-radius:20px;padding:9px 16px 9px 12px;font:600 14px Inter,system-ui,sans-serif;cursor:pointer}
+  .gbtn:disabled{opacity:.45;cursor:not-allowed}
+  .gbtn svg{width:18px;height:18px}
+  .sync{font-size:12px}
+  .sync.ok{color:var(--teal)} .sync.busy{color:var(--gold)} .sync.err{color:var(--pink)}
+  .btn.danger:hover{border-color:#ff5a5a;color:#ff8a8a}
+  .modal input[type=text]{width:100%;margin:0 0 14px}
+  .modal .err{color:#ff8a8a;font-size:12px;margin:-8px 0 12px;min-height:14px}
   .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0 10px}
   .stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;text-align:center}
   .stat b{display:block;font-family:Anton,sans-serif;font-size:34px;font-weight:400;line-height:1}
@@ -59,7 +76,10 @@
   .name{flex:1;min-width:0}
   .name div{font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .tag{white-space:nowrap;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
-  .tag.conf{color:var(--gold)}
+  .tag.conf{color:var(--teal)}
+  .vbadge{width:15px;height:15px;color:var(--teal);vertical-align:-2px;margin-left:5px;flex:none}
+  .name div{white-space:normal!important;overflow:visible!important;line-height:1.3}
+  .nm{word-break:break-word}
   .step{display:flex;align-items:center;gap:4px}
   .step button{width:26px;height:26px;border-radius:7px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);cursor:pointer;font-size:15px;line-height:1}
   .step output{min-width:28px;text-align:center;font-variant-numeric:tabular-nums;font-weight:700}
@@ -146,6 +166,23 @@
     <strong>Heads up:</strong> Rockstar hasn't published the full list of 62 birds yet, so this list is fan-made and some birds may be wrong. For now it's based on common Florida birds, and we'll update it as players find out more.
   </aside>
 
+  <section class="account" id="account" hidden aria-live="polite">
+    <div class="row" id="acctOut">
+      <div class="acct-text"><b>Save your progress</b><span>Sign in to keep your checklist on every device.</span></div>
+      <label class="age"><input type="checkbox" id="ageOk"> I'm 13 or older and agree to the <a href="/privacy">privacy policy</a></label>
+      <button class="gbtn" id="signIn" disabled>
+        <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        Sign in with Google
+      </button>
+    </div>
+    <div class="row" id="acctIn" hidden>
+      <div class="acct-text"><b>Hi, <span id="dName">birder</span> 👋</b><span class="sync ok" id="syncStatus">All sightings saved</span></div>
+      <button class="btn" id="editName">Edit name</button>
+      <button class="btn" id="signOut">Sign out</button>
+      <button class="btn danger" id="delAcct">Delete account</button>
+    </div>
+  </section>
+
   <div class="stats">
     <div class="stat"><b id="sSpecies">0</b><span>Species spotted</span></div>
     <div class="stat"><b id="sGoal">62</b><span>Species in the game</span></div>
@@ -174,7 +211,7 @@
   </form>
 
   <footer>
-    Birds marked <span style="color:var(--gold)">★ Seen in trailers</span> have been shown in official footage; the rest are common Florida birds that are likely to appear. Add or remove birds to match your in-game wildlife logbook.<br>
+    Birds with a <span style="color:var(--teal)">verified badge</span> are confirmed in the game; the rest are common Florida birds that are likely to appear. Add or remove birds to match your in-game wildlife logbook.<br>
     Your progress is saved in this browser only. Use “Share card” to make an image of it for social media.<br>
     Unofficial fan-made tracker, not affiliated with Rockstar Games. · <a href="https://leonidabirdlog.com/privacy" style="color:var(--orange)">Privacy policy</a>
   </footer>
@@ -195,27 +232,44 @@
 <div class="toast" id="toast"></div>
 <div class="modal" id="modal"><div><p>Reset all your sightings? This clears every tick and count.</p>
   <button class="btn primary" id="yes">Yes, reset</button> <button class="btn" id="no">Cancel</button></div></div>
+<div class="modal" id="nameModal"><div>
+  <p><b>Your display name</b></p>
+  <input type="text" id="nameInput" maxlength="30" autocomplete="nickname" aria-label="Display name">
+  <p class="err" id="nameErr"></p>
+  <button class="btn primary" id="nameSave">Save</button> <button class="btn" id="nameCancel">Cancel</button></div></div>
+<div class="modal" id="delModal"><div>
+  <p><b>Delete your account?</b></p>
+  <p>This permanently deletes your profile and all the sightings saved to it. It can't be undone. The checklist on this device will stay until you clear it.</p>
+  <button class="btn primary" id="delYes">Yes, delete my account</button> <button class="btn" id="delNo">Cancel</button></div></div>
 
 <script>
 const HABITATS = ["Wetlands & Swamps","Coast & Beaches","Skies & Raptors","Woods & Countryside","City & Suburbs"];
-const CONFIRMED = new Set(["American Flamingo","Brown Pelican","Mallard","Sandhill Crane","Great Egret"]);
+const CONFIRMED = new Set(["American Flamingo","Brown Pelican","Mallard","Sandhill Crane","Great Egret","Osprey","Caspian Tern"]); // bird ids
+const DISPLAY = {"Osprey":"Western Osprey"}; // id -> name shown (ids never change, so saved sightings carry over)
 const SEED = {
   "Wetlands & Swamps":["Great Egret","Snowy Egret","Great Blue Heron","Tricolored Heron","Little Blue Heron","Green Heron","Black-crowned Night Heron","Roseate Spoonbill","White Ibis","Wood Stork","Sandhill Crane","Limpkin","Anhinga","Purple Gallinule","Common Gallinule","Mottled Duck","Wood Duck","Mallard","Belted Kingfisher"],
-  "Coast & Beaches":["American Flamingo","Brown Pelican","American White Pelican","Double-crested Cormorant","Laughing Gull","Royal Tern","Black Skimmer","Magnificent Frigatebird","Sanderling","Ruddy Turnstone"],
+  "Coast & Beaches":["American Flamingo","Brown Pelican","American White Pelican","Double-crested Cormorant","Laughing Gull","Royal Tern","Caspian Tern","Black Skimmer","Magnificent Frigatebird","Sanderling","Ruddy Turnstone"],
   "Skies & Raptors":["Osprey","Bald Eagle","Red-shouldered Hawk","Swallow-tailed Kite","Snail Kite","Crested Caracara","Turkey Vulture","Black Vulture","Great Horned Owl","Barred Owl","Burrowing Owl"],
   "Woods & Countryside":["Wild Turkey","Pileated Woodpecker","Red-bellied Woodpecker","Painted Bunting","Northern Cardinal","Blue Jay","Ruby-throated Hummingbird","Chicken"],
   "City & Suburbs":["Rock Pigeon","Mourning Dove","Muscovy Duck","Monk Parakeet","Fish Crow","Boat-tailed Grackle","Northern Mockingbird","House Sparrow","European Starling"]
 };
 const KEY = "leonida-bird-log-v1";
+const SEED_HABS = {}; for(const h of HABITATS) for(const n of SEED[h]) SEED_HABS[n]=h;
 let state, filter = "all", query = "";
 
 function fresh(){
   const birds=[];
-  for(const h of HABITATS) for(const n of SEED[h]) birds.push({id:n,name:n,hab:h,count:0,seen:false});
-  return {birds};
+  for(const h of HABITATS) for(const n of SEED[h]) birds.push({id:n,name:DISPLAY[n]||n,hab:h,count:0,seen:false});
+  return {birds,removed:[]};
 }
-function load(){ try{ const s=JSON.parse(localStorage.getItem(KEY)); if(s&&Array.isArray(s.birds)) return s; }catch(e){} return fresh(); }
-function save(){ try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} }
+function load(){ try{ const s=JSON.parse(localStorage.getItem(KEY)); if(s&&Array.isArray(s.birds)){ if(!Array.isArray(s.removed)) s.removed=[]; return upgrade(s); } }catch(e){} return fresh(); }
+// keep saved lists in step with the current bird list: new names, and newly added birds
+function upgrade(s){
+  for(const b of s.birds) if(!b.custom&&SEED_HABS[b.id]) b.name=DISPLAY[b.id]||b.id;
+  for(const id in SEED_HABS) if(!s.birds.some(b=>b.id===id)&&!s.removed.includes(id)) s.birds.push({id,name:DISPLAY[id]||id,hab:SEED_HABS[id],count:0,seen:false});
+  return s;
+}
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} if(typeof onLocalChange==="function") onLocalChange(); }
 state = load();
 
 const $ = s=>document.querySelector(s);
@@ -230,6 +284,12 @@ function rankFor(n){
   return "Go find your first bird!";
 }
 
+const VBADGE='<svg class="vbadge" viewBox="0 0 24 24" aria-label="Verified" role="img"><path fill="currentColor" d="M12 1.5l2.6 1.9 3.2-.1 1 3 2.6 1.9-1 3 1 3-2.6 1.9-1 3-3.2-.1L12 22.5l-2.6-1.9-3.2.1-1-3L2.6 15.8l1-3-1-3 2.6-1.9 1-3 3.2.1z"/><path fill="none" stroke="#0d1f22" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M7.6 12.3l3 3 5.8-6.1"/></svg>';
+function nameHTML(name,conf){
+  const n=esc(name); if(!conf) return n;
+  const k=n.lastIndexOf(" "); // keep the badge on the same line as the last word
+  return (k>-1?n.slice(0,k+1):"")+'<span style="white-space:nowrap">'+n.slice(k+1)+VBADGE+'</span>';
+}
 function render(){
   const seenN = state.birds.filter(b=>b.seen).length;
   const total = state.birds.reduce((a,b)=>a+b.count,0);
@@ -245,10 +305,10 @@ function render(){
     html+=`<h2>${h}<small>${all.filter(b=>b.seen).length} / ${all.length}</small></h2><div class="grid">`;
     if(!shown.length) html+=`<div class="empty">No birds here yet.</div>`;
     for(const b of shown){
-      const conf=CONFIRMED.has(b.name);
+      const conf=!b.custom&&CONFIRMED.has(b.id);
       html+=`<div class="bird ${b.seen?"seen":""}" data-id="${esc(b.id)}">
         <button class="check" data-act="toggle" aria-label="Mark ${esc(b.name)} as spotted">✓</button>
-        <div class="name"><div>${esc(b.name)}</div><span class="tag ${conf?"conf":""}">${conf?"★ Seen in trailers":(b.custom?"Added by you":"Likely")}</span></div>
+        <div class="name"><div><span class="nm">${nameHTML(b.name,conf)}</span></div><span class="tag ${conf?"conf":""}">${conf?"Confirmed in game":(b.custom?"Added by you":"Likely")}</span></div>
         <div class="step"><button data-act="dec" aria-label="One fewer">−</button><output>${b.count}</output><button data-act="inc" aria-label="One more">+</button></div>
         <button class="del" data-act="del" title="Remove from list" aria-label="Remove ${esc(b.name)}">✕</button>
       </div>`;
@@ -265,7 +325,7 @@ $("#list").addEventListener("click",e=>{
   if(act==="toggle"){ b.seen=!b.seen; if(b.seen&&b.count===0) b.count=1; if(!b.seen) b.count=0; }
   if(act==="inc"){ b.count++; b.seen=true; }
   if(act==="dec"){ b.count=Math.max(0,b.count-1); if(b.count===0) b.seen=false; }
-  if(act==="del"){ state.birds=state.birds.filter(x=>x!==b); toast(`Removed ${b.name}`); }
+  if(act==="del"){ state.birds=state.birds.filter(x=>x!==b); if(!b.custom&&!state.removed.includes(b.id)) state.removed.push(b.id); toast(`Removed ${b.name}`); }
   save(); render();
 });
 
@@ -390,6 +450,159 @@ $("#no").addEventListener("click",()=>$("#modal").classList.remove("show"));
 $("#yes").addEventListener("click",()=>{ state.birds.forEach(b=>{b.count=0;b.seen=false;}); save(); render(); $("#modal").classList.remove("show"); toast("All sightings cleared"); });
 
 let tt; function toast(m){ const t=$("#toast"); t.textContent=m; t.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove("show"),1800); }
+
+/* ---------- Accounts: Google sign-in + cloud sync (Supabase) ---------- */
+const SB_URL="https://yiyujwrzsxrqxhjarctp.supabase.co";
+const SB_KEY="sb_publishable_LXt7TsSmOQuCV5b8FvqVLQ_izifhTNs"; // publishable key: safe in public code
+const AUTH_HOSTS=["leonidabirdlog.com","www.leonidabirdlog.com","localhost","127.0.0.1"];
+let sb=null, user=null, snapshot=new Map(), syncTimer=null, syncing=false, syncAgain=false;
+
+// ---- pure helpers (state <-> rows) ----
+function rowKey(r){ return [r.name,r.habitat,r.count,r.seen,r.custom,r.hidden].join("|"); }
+function rowsFromState(st,uid,keep){
+  const rows=new Map();
+  for(const b of st.birds){
+    const custom=!!b.custom;
+    const r={user_id:uid,bird_id:b.id,name:b.name,habitat:b.hab,count:b.count,seen:b.seen,custom,hidden:false};
+    // untouched listed birds don't need a row unless one already exists
+    if(custom||b.count>0||b.seen||keep.has(b.id)) rows.set(b.id,r);
+  }
+  for(const id of st.removed||[]) if(SEED_HABS[id]) rows.set(id,{user_id:uid,bird_id:id,name:DISPLAY[id]||id,habitat:SEED_HABS[id],count:0,seen:false,custom:false,hidden:true});
+  return rows;
+}
+function stateFromRows(rows){
+  const st=fresh();
+  for(const r of rows){
+    const i=st.birds.findIndex(b=>b.id===r.bird_id);
+    if(r.hidden){ if(i>-1&&!r.custom){ st.birds.splice(i,1); if(!st.removed.includes(r.bird_id)) st.removed.push(r.bird_id); } continue; }
+    if(i>-1){ st.birds[i].count=r.count; st.birds[i].seen=r.seen; }
+    else st.birds.push({id:r.bird_id,name:r.name,hab:HABITATS.includes(r.habitat)?r.habitat:HABITATS[0],count:r.count,seen:r.seen,custom:true});
+  }
+  return st;
+}
+// first sign-in on a device: combine what's on the device with what's in the account
+function mergeStates(local,remote){
+  const m=JSON.parse(JSON.stringify(remote));
+  for(const b of local.birds){
+    const t=m.birds.find(x=>x.id===b.id||x.name.toLowerCase()===b.name.toLowerCase());
+    if(t){ t.count=Math.max(t.count,b.count); t.seen=t.seen||b.seen||t.count>0; }
+    else if(b.custom) m.birds.push({...b});
+    else if(m.removed.includes(b.id)&&(b.count>0||b.seen)){ m.removed=m.removed.filter(x=>x!==b.id); m.birds.push({...b}); }
+  }
+  for(const id of local.removed||[]){
+    const t=m.birds.find(x=>x.id===id&&!x.custom);
+    if(t&&t.count===0&&!t.seen){ m.birds=m.birds.filter(x=>x!==t); if(!m.removed.includes(id)) m.removed.push(id); }
+  }
+  return m;
+}
+
+// ---- UI ----
+function setSync(text,cls){ const el=$("#syncStatus"); el.textContent=text; el.className="sync "+cls; }
+function showAccount(signedIn){
+  $("#account").hidden=false; $("#acctOut").hidden=signedIn; $("#acctIn").hidden=!signedIn;
+}
+function pendingKey(uid){ return "lbl-pending-"+uid; }
+function mergedKey(uid){ return "lbl-merged-"+uid; }
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ v===null?localStorage.removeItem(k):localStorage.setItem(k,v); }catch(e){} }
+
+// ---- sync ----
+function onLocalChange(){
+  if(!user) return;
+  lsSet(pendingKey(user.id),"1");
+  setSync("Saving…","busy");
+  clearTimeout(syncTimer); syncTimer=setTimeout(syncNow,800);
+}
+async function syncNow(){
+  if(!user||!sb) return;
+  if(syncing){ syncAgain=true; return; }
+  syncing=true;
+  try{
+    const rows=rowsFromState(state,user.id,new Set(snapshot.keys()));
+    const up=[], del=[];
+    for(const [id,r] of rows){ const old=snapshot.get(id); if(!old||rowKey(old)!==rowKey(r)) up.push({...r,updated_at:new Date().toISOString()}); }
+    for(const [id,old] of snapshot){ if(!rows.has(id)) del.push(id); }
+    if(up.length){ const {error}=await sb.from("sightings").upsert(up,{onConflict:"user_id,bird_id"}); if(error) throw error; }
+    if(del.length){ const {error}=await sb.from("sightings").delete().eq("user_id",user.id).in("bird_id",del); if(error) throw error; }
+    snapshot=rows;
+    lsSet(pendingKey(user.id),null);
+    setSync("All sightings saved","ok");
+  }catch(e){
+    console.warn("Sync failed",e);
+    setSync("Couldn't save. Retrying…","err");
+    clearTimeout(syncTimer); syncTimer=setTimeout(syncNow,5000);
+  }finally{
+    syncing=false;
+    if(syncAgain){ syncAgain=false; syncNow(); }
+  }
+}
+async function loadAccount(u){
+  user=u; showAccount(true); setSync("Loading your checklist…","busy");
+  const [{data:prof},{data:rows,error}]=await Promise.all([
+    sb.from("profiles").select("display_name").eq("id",u.id).maybeSingle(),
+    sb.from("sightings").select("bird_id,name,habitat,count,seen,custom,hidden").eq("user_id",u.id)
+  ]);
+  $("#dName").textContent=(prof&&prof.display_name)||"birder";
+  if(error){ setSync("Couldn't load your checklist. Retrying…","err"); setTimeout(()=>loadAccount(u),5000); return; }
+  snapshot=new Map(rows.map(r=>[r.bird_id,{user_id:u.id,...r}]));
+  const remote=stateFromRows(rows);
+  const firstHere=!lsGet(mergedKey(u.id)), pending=lsGet(pendingKey(u.id));
+  if(firstHere){
+    const hadLocal=state.birds.some(b=>b.count>0||b.seen)||state.birds.some(b=>b.custom);
+    state=mergeStates(state,remote); lsSet(mergedKey(u.id),"1");
+    if(hadLocal) toast("Your progress on this device was added to your account");
+  } else if(!pending){
+    state=remote;            // the account is the source of truth
+  }                          // else: keep unsaved changes from this device and push them
+  try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){}
+  render(); await syncNow();
+}
+
+async function initAuth(){
+  if(!AUTH_HOSTS.includes(location.hostname)) return;   // accounts only work on the real site
+  await new Promise((res,rej)=>{ const s=document.createElement("script"); s.src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"; s.onload=res; s.onerror=rej; document.head.appendChild(s); }).catch(()=>null);
+  if(!window.supabase||!window.supabase.createClient) return;
+  sb=window.supabase.createClient(SB_URL,SB_KEY,{auth:{flowType:"pkce",persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+  showAccount(false);
+  $("#ageOk").addEventListener("change",e=>{ $("#signIn").disabled=!e.target.checked; });
+  $("#signIn").addEventListener("click",async()=>{
+    $("#signIn").disabled=true;
+    const {error}=await sb.auth.signInWithOAuth({provider:"google",options:{redirectTo:location.origin+"/"}});
+    if(error){ toast("Couldn't start sign-in. Please try again"); $("#signIn").disabled=false; }
+  });
+  $("#signOut").addEventListener("click",async()=>{ await syncNow(); await sb.auth.signOut(); });
+  $("#editName").addEventListener("click",()=>{ $("#nameInput").value=$("#dName").textContent; $("#nameErr").textContent=""; $("#nameModal").classList.add("show"); $("#nameInput").focus(); });
+  $("#nameCancel").addEventListener("click",()=>$("#nameModal").classList.remove("show"));
+  $("#nameSave").addEventListener("click",async()=>{
+    const v=$("#nameInput").value.trim().replace(/\s+/g," ");
+    if(v.length<2||v.length>30){ $("#nameErr").textContent="Use 2 to 30 characters."; return; }
+    const {error}=await sb.from("profiles").update({display_name:v,updated_at:new Date().toISOString()}).eq("id",user.id);
+    if(error){ $("#nameErr").textContent="Couldn't save. Please try again."; return; }
+    $("#dName").textContent=v; $("#nameModal").classList.remove("show"); toast("Name updated");
+  });
+  $("#delAcct").addEventListener("click",()=>$("#delModal").classList.add("show"));
+  $("#delNo").addEventListener("click",()=>$("#delModal").classList.remove("show"));
+  $("#delYes").addEventListener("click",async()=>{
+    $("#delYes").disabled=true;
+    const {error}=await sb.rpc("delete_my_account");
+    $("#delYes").disabled=false;
+    if(error){ toast("Couldn't delete your account. Please try again"); return; }
+    const uid=user.id; lsSet(pendingKey(uid),null); lsSet(mergedKey(uid),null);
+    $("#delModal").classList.remove("show");
+    await sb.auth.signOut(); toast("Your account and its data have been deleted");
+  });
+
+  let current=null;
+  sb.auth.onAuthStateChange((event,session)=>{
+    const u=session&&session.user;
+    if(u&&(!current||current!==u.id)){ current=u.id; setTimeout(()=>loadAccount(u),0); }
+    if(!u&&current){ current=null; user=null; snapshot=new Map(); showAccount(false); $("#ageOk").checked=false; $("#signIn").disabled=true; }
+    if(!u&&!current) showAccount(false);
+  });
+  // tidy the address bar after returning from Google
+  if(/[?&](code|error)=/.test(location.search)) setTimeout(()=>history.replaceState(null,"",location.pathname+location.hash),1500);
+}
+initAuth();
 
 render();
 </script>

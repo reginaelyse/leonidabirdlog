@@ -107,6 +107,7 @@
   .sharebox img{width:100%;border-radius:10px;display:block;background:#000;aspect-ratio:4/5}
   .sharebox .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
   .sharebox .row .btn{flex:1}
+  .sharebox .row #saveImg{flex:1 1 100%;padding:13px 14px;font-size:15px}
   .sharebox .hint{color:var(--muted);font-size:12px;margin:10px 0 0;line-height:1.5}
   @media (max-width:560px){h1 .script{font-size:50px}h1 .block{font-size:20px}.stat b{font-size:30px}}
 </style>
@@ -348,7 +349,15 @@ $("#addForm").addEventListener("submit",e=>{
 /* ---------- Share card (1080×1350, Instagram portrait) ---------- */
 let cardBlob=null, downloads=null;
 const standalone=!window.claude; // true when hosted on your own website
-if(standalone){ $("#saveImg").hidden=false; $("#saveHint").textContent="On a phone you can also press and hold the image to save it."; }
+// phones/tablets: use the share sheet, which has "Save Image" (to Photos) as well as Instagram, Messages etc.
+const isTouch=window.matchMedia&&matchMedia("(pointer:coarse)").matches;
+function canShareImage(){ try{ return isTouch&&!!navigator.canShare&&navigator.canShare({files:[new File([new Blob(["x"],{type:"image/png"})],"t.png",{type:"image/png"})]}); }catch(e){ return false; } }
+const shareSheet=standalone&&canShareImage();
+if(standalone){
+  $("#saveImg").hidden=false;
+  if(shareSheet){ $("#saveImg").textContent="📲 Save to Photos"; $("#saveHint").textContent="Tap the button, then choose “Save Image” to put it in your Photos, or pick an app to post it."; }
+  else $("#saveHint").textContent="On a phone you can also press and hold the image to save it.";
+}
 try{ window.claude && claude.use("downloads").then(d=>{ downloads=d; $("#saveImg").hidden=!d; if(d) $("#saveHint").textContent="Or press and hold / right-click the image to save it."; }).catch(()=>{}); }catch(e){}
 
 function roundRect(c,x,y,w,h,r){ c.beginPath(); c.moveTo(x+r,y); c.arcTo(x+w,y,x+w,y+h,r); c.arcTo(x+w,y+h,x,y+h,r); c.arcTo(x,y+h,x,y,r); c.arcTo(x,y,x+w,y,r); c.closePath(); }
@@ -429,6 +438,12 @@ $("#closeShare").addEventListener("click",()=>$("#sharebox").classList.remove("s
 $("#sharebox").addEventListener("click",e=>{ if(e.target.id==="sharebox") $("#sharebox").classList.remove("show"); });
 $("#saveImg").addEventListener("click",async()=>{
   if(!cardBlob) return;
+  if(shareSheet){
+    const file=new File([cardBlob],"leonida-bird-log.png",{type:"image/png"});
+    try{ await navigator.share({files:[file],title:"My Leonida Bird Log"}); }
+    catch(e){ if(e&&e.name!=="AbortError") toast("Couldn't open sharing. Press and hold the image to save it instead"); }
+    return;
+  }
   if(standalone){ const a=document.createElement("a"); a.href=URL.createObjectURL(cardBlob); a.download="leonida-bird-log.png"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),4000); toast("Image saved!"); return; }
   if(!downloads) return;
   try{ await downloads.save({filename:"leonida-bird-log.png",data:cardBlob}); toast("Image saved!"); }
